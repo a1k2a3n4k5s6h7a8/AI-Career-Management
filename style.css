@@ -1,0 +1,356 @@
+/* style.css */
+/* Custom premium stylesheet for the AI Placement Predictor & Career Mentor */
+/* Utilizes a modern glassmorphic dark theme with vibrant blue and purple accents */
+
+:root {
+    --bg-dark: #090d16;
+    --bg-card: #111827;
+    --bg-navbar: rgba(17, 24, 39, 0.75);
+    --border-color: #1f2937;
+    --border-hover: #374151;
+    
+    /* Harmonious gradients & branding colors */
+    --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    --primary-color: #3b82f6;
+    --secondary-color: #8b5cf6;
+    
+    /* Text colors */
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* -------------------------------------------------------------
+   NAVBAR STYLES
+   ------------------------------------------------------------- */
+.bg-glass {
+    background-color: var(--bg-navbar);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand {
+    font-size: 1.3rem;
+    letter-spacing: -0.025em;
+}
+
+.text-primary-gradient {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--text-primary) !important;
+}
+
+/* -------------------------------------------------------------
+   BUTTON STYLES
+   ------------------------------------------------------------- */
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+    font-weight: 600;
+    color: #ffffff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: var(--primary-gradient);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.btn-outline-light {
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.btn-outline-light:hover {
+    background-color: var(--border-color);
+    border-color: var(--text-secondary);
+}
+
+.hover-scale {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.03);
+}
+
+/* -------------------------------------------------------------
+   HERO SECTION
+   ------------------------------------------------------------- */
+.hero-section {
+    position: relative;
+    min-height: 80vh;
+    padding-top: 100px;
+    padding-bottom: 60px;
+    background-image: radial-gradient(circle at 10% 20%, rgba(17, 24, 39, 0.8) 0%, rgba(9, 13, 22, 0.95) 90%), url("https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80");
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-primary-soft {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+}
+
+.text-gray-300 {
+    color: #d1d5db;
+}
+
+.text-gray-400 {
+    color: #9ca3af;
+}
+
+.text-gray-500 {
+    color: #6b7280;
+}
+
+.max-w-2xl {
+    max-width: 42rem;
+}
+
+.max-w-xl {
+    max-width: 36rem;
+}
+
+.max-w-lg {
+    max-width: 32rem;
+}
+
+/* -------------------------------------------------------------
+   CARD STYLES
+   ------------------------------------------------------------- */
+.bg-dark-800 {
+    background-color: var(--bg-card) !important;
+}
+
+.bg-dark-900 {
+    background-color: #0e1320 !important;
+}
+
+.bg-dark-950 {
+    background-color: var(--bg-dark) !important;
+}
+
+.border-dark-700 {
+    border-color: #1f2937 !important;
+}
+
+.border-dark-800 {
+    border-color: #1f2937 !important;
+}
+
+.icon-wrapper {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-card {
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.feature-card:hover {
+    border-color: #374151 !important;
+    transform: translateY(-5px);
+}
+
+/* -------------------------------------------------------------
+   AUTH CARD STYLES
+   ------------------------------------------------------------- */
+.auth-card {
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.auth-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-group-text {
+    background-color: #0e1320;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+.form-control, .form-select {
+    background-color: #0e1320;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #0e1320;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.15);
+    color: #ffffff;
+}
+
+/* -------------------------------------------------------------
+   ASSESSMENT FORM STYLES (PREDICT)
+   ------------------------------------------------------------- */
+.section-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.card {
+    border: 1px solid var(--border-color);
+}
+
+/* -------------------------------------------------------------
+   RESULT DASHBOARD STYLES
+   ------------------------------------------------------------- */
+.outcome-badge-success {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba(16, 185, 129, 0.1);
+    border: 3px solid rgba(16, 185, 129, 0.4);
+}
+
+.outcome-badge-danger {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba(244, 63, 94, 0.1);
+    border: 3px solid rgba(244, 63, 94, 0.4);
+}
+
+/* Glass alert effects */
+.alert-danger-glass {
+    background-color: rgba(244, 63, 94, 0.08);
+    border: 1px solid rgba(244, 63, 94, 0.15) !important;
+}
+
+.bg-success-soft {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+.bg-danger-soft {
+    background-color: rgba(244, 63, 94, 0.15) !important;
+}
+
+.text-emerald-400 {
+    color: #34d399 !important;
+}
+
+.text-rose-400 {
+    color: #fb7185 !important;
+}
+
+/* Pulse Animation for Placed status */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(16, 185, 129, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+/* -------------------------------------------------------------
+   HISTORY TABLE STYLES
+   ------------------------------------------------------------- */
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.02);
+    --bs-table-hover-color: #ffffff;
+}
+
+.table td, .table th {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* -------------------------------------------------------------
+   UTILITIES
+   ------------------------------------------------------------- */
+.pt-7 {
+    padding-top: 110px !important;
+}
+
+.py-6 {
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+}
+
+.text-xs {
+    font-size: 0.75rem;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.tracking-wider {
+    letter-spacing: 0.05em;
+}
+
+.tracking-tight {
+    letter-spacing: -0.025em;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #374151;
+}

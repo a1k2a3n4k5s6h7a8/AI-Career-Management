@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Placement Predictor & Career Mentor</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/style.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- Professional Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-glass fixed-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home') }}">
+                <i class="fa-solid fa-graduation-cap me-2 text-primary fs-3"></i>
+                <span class="fw-bold tracking-tight">AI Placement <span class="text-primary-gradient">Predictor</span></span>
+            </a>
+            <button class="navbar-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    {% if session.user_id %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('predict') }}">Predict Placement</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('history') }}">History</a>
+                        </li>
+                        <li class="nav-item ms-lg-3">
+                            <span class="text-light me-3 d-none d-lg-inline-block"><i class="fa-solid fa-circle-user text-primary me-1"></i> Hello, <strong>{{ session.username }}</strong></span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger btn-sm px-3 rounded-pill" href="{{ url_for('logout') }}"><i class="fa-solid fa-sign-out-alt me-1"></i> Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item ms-lg-2">
+                            <a class="btn btn-primary px-4 py-2 rounded-pill shadow-sm" href="{{ url_for('register') }}"><i class="fa-solid fa-user-plus me-1"></i> Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Stunning Hero Section -->
+    <header class="hero-section d-flex align-items-center justify-content-center text-center">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content position-relative">
+            <span class="badge bg-primary-soft text-primary px-3 py-2 mb-3 rounded-pill text-uppercase tracking-wider fw-semibold"><i class="fa-solid fa-sparkles me-1 text-warning"></i> Powered by Advanced Machine Learning</span>
+            <h1 class="display-3 fw-extrabold text-white mb-3">
+                Shape Your Career with <br><span class="text-primary-gradient">Predictive AI Intelligence</span>
+            </h1>
+            <p class="lead text-gray-300 mx-auto mb-5 max-w-2xl">
+                Evaluate your academic standings, programming scores, and career activities. Get institutional-grade placement probability, expected salary ranges, and personalized mentorship to secure your dream offers.
+            </p>
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                {% if session.user_id %}
+                    <a href="{{ url_for('predict') }}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-lg hover-scale">
+                        <i class="fa-solid fa-arrow-trend-up me-2"></i> Get Placement Score
+                    </a>
+                    <a href="{{ url_for('history') }}" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill hover-scale">
+                        <i class="fa-solid fa-history me-2"></i> View Past Predictions
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-lg hover-scale">
+                        <i class="fa-solid fa-user-rocket me-2"></i> Start Free Assessment
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill hover-scale">
+                        <i class="fa-solid fa-sign-in-alt me-2"></i> Log In to Dashboard
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- Key App Features Section -->
+    <section class="py-6 bg-dark-900 border-top border-dark-800">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="h1 fw-bold text-white mb-2">How It Works</h2>
+                <p class="text-gray-400">Our machine learning pipeline processes your professional profile in three simple steps.</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Feature 1 -->
+                <div class="col-md-4">
+                    <div class="feature-card h-100 p-4 rounded-4 border border-dark-800 bg-dark-800 text-center hover-up">
+                        <div class="icon-wrapper bg-primary-soft text-primary mx-auto mb-4">
+                            <i class="fa-solid fa-sliders fs-2"></i>
+                        </div>
+                        <h3 class="h4 text-white fw-bold mb-3">1. Enter Your Details</h3>
+                        <p class="text-gray-400 mb-0">Fill out your academic performance (CGPA, attendance, backlogs) along with coding scores, hackathon history, and LinkedIn profile details.</p>
+                    </div>
+                </div>
+                <!-- Feature 2 -->
+                <div class="col-md-4">
+                    <div class="feature-card h-100 p-4 rounded-4 border border-dark-800 bg-dark-800 text-center hover-up">
+                        <div class="icon-wrapper bg-primary-soft text-primary mx-auto mb-4">
+                            <i class="fa-solid fa-brain fs-2"></i>
+                        </div>
+                        <h3 class="h4 text-white fw-bold mb-3">2. AI Models Calculate</h3>
+                        <p class="text-gray-400 mb-0">We run your profile against a Random Forest Classifier trained on 100,000 records to assess placement likelihood and estimate your market salary package.</p>
+                    </div>
+                </div>
+                <!-- Feature 3 -->
+                <div class="col-md-4">
+                    <div class="feature-card h-100 p-4 rounded-4 border border-dark-800 bg-dark-800 text-center hover-up">
+                        <div class="icon-wrapper bg-primary-soft text-primary mx-auto mb-4">
+                            <i class="fa-solid fa-chart-line fs-2"></i>
+                        </div>
+                        <h3 class="h4 text-white fw-bold mb-3">3. Personalized Mentorship</h3>
+                        <p class="text-gray-400 mb-0">Receive a detailed dashboard highlights critical weaknesses (e.g. aptitude, github repo count) and provides actionable roadmap tasks to fix them.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Footer -->
+    <footer class="footer bg-dark-950 py-4 border-top border-dark-800 text-center">
+        <div class="container">
+            <p class="text-gray-500 mb-0">
+                &copy; 2026 AI Placement Predictor & Career Mentor. Built for student upskilling & analytics.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

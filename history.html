@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction History - Career Mentor</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-dark-950 d-flex flex-column min-vh-100">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-glass fixed-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home') }}">
+                <i class="fa-solid fa-graduation-cap me-2 text-primary fs-3"></i>
+                <span class="fw-bold tracking-tight">AI Placement <span class="text-primary-gradient">Predictor</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('predict') }}">Predict Placement</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('history') }}">History</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <span class="text-light me-3 d-none d-lg-inline-block"><i class="fa-solid fa-circle-user text-primary me-1"></i> Hello, <strong>{{ session.username }}</strong></span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-danger btn-sm px-3 rounded-pill" href="{{ url_for('logout') }}"><i class="fa-solid fa-sign-out-alt me-1"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container pt-7 pb-5 my-auto">
+        
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1 class="h2 fw-bold text-white mb-2">Your Assessment History</h1>
+            <p class="text-gray-400 max-w-lg mx-auto">Compare your past assessments and track how your placement probabilities improve with higher grades and better scores.</p>
+        </div>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show border-0 rounded-3 mb-4 shadow" role="alert">
+                        <i class="fa-solid fa-circle-info me-2"></i> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- History Content -->
+        {% if not predictions %}
+            <!-- Empty State -->
+            <div class="card p-5 rounded-4 border border-dark-800 bg-dark-800 shadow-lg text-center max-w-xl mx-auto my-4">
+                <div class="icon-wrapper bg-primary-soft text-primary mx-auto mb-4">
+                    <i class="fa-solid fa-folder-open fs-2"></i>
+                </div>
+                <h3 class="h4 text-white fw-bold mb-3">No Saved Assessments</h3>
+                <p class="text-gray-400 mb-4">You haven't run any placement predictions yet. Once you fill out the assessment form, your predictions will show up here.</p>
+                <a href="{{ url_for('predict') }}" class="btn btn-primary rounded-pill px-4 py-2.5 hover-scale">
+                    <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Get Your First Score
+                </a>
+            </div>
+        {% else %}
+            <!-- History Table Card -->
+            <div class="card rounded-4 border border-dark-800 bg-dark-800 shadow-lg overflow-hidden mb-4">
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover align-middle mb-0">
+                        <thead class="bg-dark-900 border-bottom border-dark-700">
+                            <tr>
+                                <th class="ps-4">Date</th>
+                                <th>CGPA</th>
+                                <th>Coding Score</th>
+                                <th>Branch</th>
+                                <th>Prediction</th>
+                                <th>Probability</th>
+                                <th>Estimated Salary</th>
+                                <th class="text-end pe-4">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pred in predictions %}
+                                <tr>
+                                    <!-- Date -->
+                                    <td class="ps-4">
+                                        <span class="text-sm text-gray-300">{{ pred.created_at[:10] }}</span>
+                                        <small class="text-xs text-gray-500 d-block">{{ pred.created_at[11:16] }}</small>
+                                    </td>
+                                    
+                                    <!-- Academic Stats -->
+                                    <td><strong class="text-white">{{ "%.2f"|format(pred.cgpa) }}</strong></td>
+                                    <td><span class="text-sm text-gray-300">{{ "%.1f"|format(pred.coding_skill_score) }}%</span></td>
+                                    <td><span class="text-sm text-gray-400">{{ pred.branch }}</span></td>
+                                    
+                                    <!-- Prediction Outcome -->
+                                    <td>
+                                        {% if pred.prediction_class == 'Placed' %}
+                                            <span class="badge bg-success-soft text-emerald-400 border border-success-soft py-1.5 px-2.5 rounded-pill"><i class="fa-solid fa-check-circle me-1"></i> Placed</span>
+                                        {% else %}
+                                            <span class="badge bg-danger-soft text-rose-400 border border-danger-soft py-1.5 px-2.5 rounded-pill"><i class="fa-solid fa-times-circle me-1"></i> Not Placed</span>
+                                        {% endif %}
+                                    </td>
+                                    
+                                    <!-- Probability -->
+                                    <td><strong class="text-white">{{ "%.1f"|format(pred.prediction_prob) }}%</strong></td>
+                                    
+                                    <!-- Salary -->
+                                    <td>
+                                        {% if pred.prediction_class == 'Placed' %}
+                                            <strong class="text-primary-gradient">{{ "%.2f"|format(pred.salary_package) }} LPA</strong>
+                                        {% else %}
+                                            <span class="text-gray-600">0.00 LPA</span>
+                                        {% endif %}
+                                    </td>
+                                    
+                                    <!-- Actions -->
+                                    <td class="text-end pe-4">
+                                        <a href="{{ url_for('delete_history', id=pred.id) }}" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 text-xs" onclick="return confirm('Are you sure you want to delete this prediction?')">
+                                            <i class="fa-solid fa-trash-can me-1"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="text-center pt-2">
+                <a href="{{ url_for('predict') }}" class="btn btn-outline-light rounded-pill px-4 py-2 hover-scale text-sm">
+                    <i class="fa-solid fa-plus me-1"></i> New Assessment
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark-950 py-3 border-top border-dark-800 text-center mt-auto">
+        <div class="container">
+            <p class="text-gray-500 mb-0 text-sm">
+                &copy; 2026 AI Placement Predictor & Career Mentor.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
